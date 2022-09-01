@@ -7,12 +7,12 @@ import java.awt.event.KeyEvent;
 import java.awt.datatransfer.StringSelection;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
-public class NFTMaker{
+public class NftMaker{
 	public static void main(String[] args) throws IOException {
 		//declarations
 		String randLine = ""; 
 
-
+		
 		//counts number of lines in da file
 		long count = 0;
 		try {
