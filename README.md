@@ -1,3 +1,3 @@
 # nftMaker
-# Authors: Lux, Kieran, Timmy
+# Authors: Kieran & Lux
 Colab java program to make NFTs(hopefully)
