@@ -1,7 +1,8 @@
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.util.stream.Stream;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.datatransfer.StringSelection;
@@ -28,9 +29,10 @@ public class nftmaker{
 		    }
 		//randomly finds a line to look read for a word
 		int lineNum = (int) (Math.random()*count)+1;
-		randLine = Files.readAllLines(Paths.get("words.txt")).get(lineNum);
-		System.out.println(randLine);
-	
+        try (Stream<String> lines = Files.lines(Paths.get("words.txt"))) {
+            randLine = lines.skip(lineNum).findFirst().get();
+        }
+        System.out.println(randLine);
 	
 	
 	try {
