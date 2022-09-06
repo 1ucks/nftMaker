@@ -18,12 +18,17 @@ public class nftmaker{
 		//declarations
 		String randLine = ""; 
 		String chromePath = "";
-
+		boolean sCPU = false;
 
 		//determines what kind of computer u are using and sets the chrome file path
 		if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
-            chromePath = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe";
+            chromePath = "C:\\progra~2/Google/Chrome/Application/chrome.exe";
 			System.out.println("Detected windows");
+			System.out.print("Are you on a school computer?(y/n) ");
+			String schoolComputer = in.nextLine();	
+			if(schoolComputer.toLowerCase().startsWith("y")) {
+				sCPU = true;
+			}
         }else if(System.getProperty("os.name").toLowerCase().startsWith("linux")){
 			chromePath = "/opt/google/chrome/chrome";
 			System.out.println("Detected linux");
@@ -31,8 +36,7 @@ public class nftmaker{
 			System.out.print("Please enter the location of chrome.exe on your computer: ");
 			chromePath = in.nextLine();
 		}
-
-
+		
 		
 		//counts number of lines in da file
 		long count = 0;
@@ -64,14 +68,27 @@ public class nftmaker{
 		//copies the word
 		clipboard.setContents(selection, selection);
 		
-
+		System.out.println(sCPU);
 		//opens google(hopefully)
-
+		if(!sCPU) {
+		System.out.println("f");
 		Runtime run = Runtime.getRuntime();
 		run.exec(chromePath);
-
-		//pastes
 		robot.delay(5000);
+		}
+		else {
+			robot.keyPress(KeyEvent.VK_WINDOWS);
+			robot.keyRelease(KeyEvent.VK_WINDOWS);
+			robot.delay(500);
+			robot.keyPress(KeyEvent.VK_TAB);
+			robot.keyRelease(KeyEvent.VK_TAB);
+			robot.delay(100);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+
+		}
+		//pastes
+		robot.delay(1000);
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_V);
 		robot.keyRelease(KeyEvent.VK_V);
