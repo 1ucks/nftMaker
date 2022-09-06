@@ -68,10 +68,8 @@ public class nftmaker{
 		//copies the word
 		clipboard.setContents(selection, selection);
 		
-		System.out.println(sCPU);
 		//opens google(hopefully)
 		if(!sCPU) {
-		System.out.println("f");
 		Runtime run = Runtime.getRuntime();
 		run.exec(chromePath);
 		robot.delay(5000);
