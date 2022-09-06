@@ -53,12 +53,13 @@ public class nftmaker{
             randLine = lines.skip(lineNum).findFirst().get();
         }
         System.out.println(randLine);
-	
+
 	
 	try {
         // Makes a new robot
         Robot robot = new Robot();
-		StringSelection selection = new StringSelection(randLine);
+		//Sets url to go to google images
+		StringSelection selection = new StringSelection("google.com/search?q="+randLine+"&tbm=isch");
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		//copies the word
 		clipboard.setContents(selection, selection);
