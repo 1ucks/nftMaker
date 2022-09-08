@@ -22,7 +22,7 @@ public class nftmaker{
 
 		//determines what kind of computer u are using and sets the chrome file path
 		if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
-            chromePath = "C:\\progra~2/Google/Chrome/Application/chrome.exe";
+            chromePath = "C:\progra~2/Google/Chrome/Application/chrome.exe";
 			System.out.println("Detected windows");
 			System.out.print("Are you on a school computer?(y/n) ");
 			String schoolComputer = in.nextLine();	
