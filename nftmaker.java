@@ -35,13 +35,9 @@ public class nftmaker{
         int winX = 1100;
         int winY = 200;
         String[] dataArray;
-        
-        
-        
-        
-		//determines what kind of computer u are using and sets the chrome file path
-		if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
-            chromePath = "C:\\progra~2/Google/Chrome/Application/chrome.exe";
+
+	/* 	if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
+			chromePath = "C:\\progra~2/Google/Chrome/Application/chrome.exe";
 			System.out.println("Detected windows");
 			System.out.print("Are you on a school computer?(y/n) ");
 			String schoolComputer = in.nextLine();	
@@ -68,7 +64,7 @@ public class nftmaker{
 				}
 			}
 			
-        }else if(System.getProperty("os.name").toLowerCase().startsWith("linux")){
+		}else if(System.getProperty("os.name").toLowerCase().startsWith("linux")){
 			chromePath = "/opt/google/chrome/chrome";
 			System.out.println("Detected linux");
 			winX = 1100;
@@ -81,8 +77,11 @@ public class nftmaker{
 			winX = in.nextInt();
 			System.out.print("Enter the y value for a selected image in a google tab: ");
 			winY = in.nextInt();
-		}
+		}*/
 		
+        
+		userInputsAndSettings(sCPU, chromePath, winX, winY, in);
+       
 		
 		//counts number of lines in da file
 		long count = 0;
@@ -116,40 +115,8 @@ for(int i = 0; i < numIm; i++) {
 		
 		//KIERAN PUT ALL OF THE CODE BELOW INTO A FUNCTION IF YOU CAN SO WE CAN LOOK UP MULTIPLE IMAGES
 		//opens google(hopefully)
-		if(!sCPU) {
-		Runtime run = Runtime.getRuntime();
-		run.exec(chromePath);
-		if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
-			robot.delay(500);
-		}
-		else{
-			robot.delay(5000);
-		}
-		
-		}
-		else {
-			//opens google on the restricted school cpus
-			robot.keyPress(KeyEvent.VK_WINDOWS);
-			robot.keyRelease(KeyEvent.VK_WINDOWS);
-			robot.delay(500);
-			robot.keyPress(KeyEvent.VK_TAB);
-			robot.keyRelease(KeyEvent.VK_TAB);
-			robot.delay(100);
-			robot.keyPress(KeyEvent.VK_ENTER);
-			robot.keyRelease(KeyEvent.VK_ENTER);
-
-		}
-		//pastes
-		robot.delay(1000);
-		robot.keyPress(KeyEvent.VK_CONTROL);
-		robot.keyPress(KeyEvent.VK_V);
-		robot.keyRelease(KeyEvent.VK_V);
-		robot.keyRelease(KeyEvent.VK_CONTROL);
-		robot.delay(100);
-		robot.keyPress(10);
-		robot.keyRelease(10);
-		
-		
+		getsToGoogleAndPastes(sCPU, chromePath, robot);
+			
 		if(System.getProperty("os.name").toLowerCase().startsWith("windows")) {
 			//selects first image on school cpu
 			
@@ -224,6 +191,7 @@ for(int i = 0; i < numIm; i++) {
       }}
 	  
 }
+
 //methods KIERAN ADD YOUR FUNCTIONS DOWN HERE
 public static void display(BufferedImage image) {
 	//Prints the created image
@@ -234,7 +202,6 @@ public static void display(BufferedImage image) {
     f.setLocationRelativeTo(null);
     f.setVisible(true);
 }
-
 public static void schoolCopyAddress(int x, int y) throws AWTException {
 	//copies the selected image's address
     Robot robot = new Robot();
@@ -269,5 +236,85 @@ public static String getRandomWord(long count) {
 
 	return randLine;
 }
+public static void getsToGoogleAndPastes(boolean sCPU, String chromePath, Robot robot) throws IOException, AWTException {
 
+	if(!sCPU) {
+		Runtime run = Runtime.getRuntime();
+		run.exec(chromePath);
+		if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
+			robot.delay(500);
+		}
+		else{
+			robot.delay(5000);
+		}
+		
+		
+	}else {
+			//opens google on the restricted school cpus
+			robot.keyPress(KeyEvent.VK_WINDOWS);
+			robot.keyRelease(KeyEvent.VK_WINDOWS);
+			robot.delay(500);
+			robot.keyPress(KeyEvent.VK_TAB);
+			robot.keyRelease(KeyEvent.VK_TAB);
+			robot.delay(100);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+
+		}
+		//pastes
+		robot.delay(1000);
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		robot.delay(100);
+		robot.keyPress(10);
+		robot.keyRelease(10);
+
+}
+public static void userInputsAndSettings(boolean sCPU, String chromePath, int winX, int winY, Scanner in) {
+	if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
+		chromePath = "C:\\progra~2/Google/Chrome/Application/chrome.exe";
+		System.out.println("Detected windows");
+		System.out.print("Are you on a school computer?(y/n) ");
+		String schoolComputer = in.nextLine();	
+		if(schoolComputer.toLowerCase().startsWith("y")) {
+			sCPU = true;
+		}
+		else {
+			System.out.print("Who's computer are you on? (Kieran's, lux's, type 'add' to use a different computer) ");
+			String cpUser = in.next();
+			if(cpUser.toLowerCase().startsWith("k")) {
+				//KIERAN ADD YOUR IMAGE COORDS HERE:
+				winX = 1100;
+				winY = 200;
+			}
+			else if(cpUser.toLowerCase().startsWith("l")){
+				winX = 1000;
+				winY = 200;
+			}
+			else {
+				System.out.print("Enter the x value for a selected image in a google tab: ");
+				winX = in.nextInt();
+				System.out.print("Enter the y value for a selected image in a google tab: ");
+				winY = in.nextInt();
+			}
+		}
+		
+	}else if(System.getProperty("os.name").toLowerCase().startsWith("linux")){
+		chromePath = "/opt/google/chrome/chrome";
+		System.out.println("Detected linux");
+		winX = 1100;
+		winY = 200;
+		
+	}else{
+		System.out.print("Please enter the location of chrome.exe on your computer: ");
+		chromePath = in.nextLine();
+		System.out.print("Enter the x value for a selected image in a google tab: ");
+		winX = in.nextInt();
+		System.out.print("Enter the y value for a selected image in a google tab: ");
+		winY = in.nextInt();
+	}
+
+}
 }
