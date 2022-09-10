@@ -260,7 +260,7 @@ public static void getsToGoogleAndPastes(boolean sCPU, String chromePath, Robot 
 
 		}
 		//pastes
-		robot.delay(1000);
+		robot.delay(1200);
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_V);
 		robot.keyRelease(KeyEvent.VK_V);
