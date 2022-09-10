@@ -227,7 +227,7 @@ for(int i = 0; i < numIm; i++) {
 //methods KIERAN ADD YOUR FUNCTIONS DOWN HERE
 public static void display(BufferedImage image) {
 	//Prints the created image
-    JFrame f = new JFrame("WaterMark");
+    JFrame f = new JFrame("aNFT");
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     f.getContentPane().add(new JLabel(new ImageIcon(image)));
     f.pack();
