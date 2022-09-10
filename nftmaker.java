@@ -36,7 +36,7 @@ public class nftmaker{
         int winY = 200;
         String[] dataArray;
 
-	/* 	if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
+	 	if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
 			chromePath = "C:\\progra~2/Google/Chrome/Application/chrome.exe";
 			System.out.println("Detected windows");
 			System.out.print("Are you on a school computer?(y/n) ");
@@ -77,11 +77,9 @@ public class nftmaker{
 			winX = in.nextInt();
 			System.out.print("Enter the y value for a selected image in a google tab: ");
 			winY = in.nextInt();
-		}*/
+		}
 		
         
-		userInputsAndSettings(sCPU, chromePath, winX, winY, in);
-       
 		
 		//counts number of lines in da file
 		long count = 0;
@@ -270,51 +268,6 @@ public static void getsToGoogleAndPastes(boolean sCPU, String chromePath, Robot 
 		robot.delay(100);
 		robot.keyPress(10);
 		robot.keyRelease(10);
-
-}
-public static void userInputsAndSettings(boolean sCPU, String chromePath, int winX, int winY, Scanner in) {
-	if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
-		chromePath = "C:\\progra~2/Google/Chrome/Application/chrome.exe";
-		System.out.println("Detected windows");
-		System.out.print("Are you on a school computer?(y/n) ");
-		String schoolComputer = in.nextLine();	
-		if(schoolComputer.toLowerCase().startsWith("y")) {
-			sCPU = true;
-		}
-		else {
-			System.out.print("Who's computer are you on? (Kieran's, lux's, type 'add' to use a different computer) ");
-			String cpUser = in.next();
-			if(cpUser.toLowerCase().startsWith("k")) {
-				//KIERAN ADD YOUR IMAGE COORDS HERE:
-				winX = 1100;
-				winY = 200;
-			}
-			else if(cpUser.toLowerCase().startsWith("l")){
-				winX = 1000;
-				winY = 200;
-			}
-			else {
-				System.out.print("Enter the x value for a selected image in a google tab: ");
-				winX = in.nextInt();
-				System.out.print("Enter the y value for a selected image in a google tab: ");
-				winY = in.nextInt();
-			}
-		}
-		
-	}else if(System.getProperty("os.name").toLowerCase().startsWith("linux")){
-		chromePath = "/opt/google/chrome/chrome";
-		System.out.println("Detected linux");
-		winX = 1100;
-		winY = 200;
-		
-	}else{
-		System.out.print("Please enter the location of chrome.exe on your computer: ");
-		chromePath = in.nextLine();
-		System.out.print("Enter the x value for a selected image in a google tab: ");
-		winX = in.nextInt();
-		System.out.print("Enter the y value for a selected image in a google tab: ");
-		winY = in.nextInt();
-	}
 
 }
 }
