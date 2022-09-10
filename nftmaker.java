@@ -217,7 +217,8 @@ for(int i = 0; i < numIm; i++) {
         g.dispose();
 
         display(im);
-        ImageIO.write(im, "jpeg", new File("sample_output.jpeg"));
+		//below code saves the first nft into a file called sample_output.jpeg, removed bcuz gets anoying when pushing
+        //ImageIO.write(im, "jpeg", new File("sample_output.jpeg"));
 		
       } catch (Exception e) {
       }}
