@@ -49,7 +49,7 @@ public class nftmaker{
 				sCPU = true;
 			}
 			else {
-				System.out.print("Who's computer are you on? (Kieran's, lux's, type 'add' to use a different computer");
+				System.out.print("Who's computer are you on? (Kieran's, lux's, type 'add' to use a different computer) ");
 				String cpUser = in.next();
 				if(cpUser.toLowerCase().startsWith("k")) {
 					//KIERAN ADD YOUR IMAGE COORDS HERE:
@@ -57,7 +57,7 @@ public class nftmaker{
 					winY = 200;
 				}
 				else if(cpUser.toLowerCase().startsWith("l")){
-					winX = 1100;
+					winX = 1000;
 					winY = 200;
 				}
 				else {
@@ -119,7 +119,13 @@ for(int i = 0; i < numIm; i++) {
 		if(!sCPU) {
 		Runtime run = Runtime.getRuntime();
 		run.exec(chromePath);
-		robot.delay(5000);
+		if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
+			robot.delay(500);
+		}
+		else{
+			robot.delay(5000);
+		}
+		
 		}
 		else {
 			//opens google on the restricted school cpus
@@ -142,9 +148,13 @@ for(int i = 0; i < numIm; i++) {
 		robot.delay(100);
 		robot.keyPress(10);
 		robot.keyRelease(10);
+		
+		
 		if(System.getProperty("os.name").toLowerCase().startsWith("windows")) {
 			//selects first image on school cpu
-			robot.delay(1700);
+			
+			robot.delay(2500);
+			robot.mouseMove(0, 0);
 			robot.keyPress(KeyEvent.VK_DOWN);
 			robot.keyRelease(KeyEvent.VK_DOWN);
 			robot.delay(500);
