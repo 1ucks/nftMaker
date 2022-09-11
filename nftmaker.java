@@ -35,6 +35,8 @@ public class nftmaker{
         int winX = 1100;
         int winY = 200;
         String[] dataArray;
+		int random = (int)(Math.random()*31);
+		int random2 = (int)(Math.random()*31);
 
 	 	if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
 			chromePath = "C:\\progra~2/Google/Chrome/Application/chrome.exe";
@@ -108,13 +110,9 @@ for(int i = 0; i < numIm; i++) {
 		//copies the word
 		clipboard.setContents(selection, selection);
 		
-		
-		
-		
-		//KIERAN PUT ALL OF THE CODE BELOW INTO A FUNCTION IF YOU CAN SO WE CAN LOOK UP MULTIPLE IMAGES
 		//opens google(hopefully)
 		getsToGoogleAndPastes(sCPU, chromePath, robot);
-			
+		System.out.println("test below gets google");	
 		if(System.getProperty("os.name").toLowerCase().startsWith("windows")) {
 			//selects first image on school cpu
 			
@@ -166,25 +164,38 @@ for(int i = 0; i < numIm; i++) {
 	        
 		}	        
           
-		
 		else if(System.getProperty("os.name").toLowerCase().startsWith("linux")){
 			//Need to still write code for this.
 		}
 		
 		//prints created image NEEDS FIXING FOR NUMBERS DIFFERENT THAN 2
-		URL url = new URL(dataArray[0]);
+		URL url, url2, url3;
+		url = new URL(dataArray[0]);
         BufferedImage im = ImageIO.read(url);
-        URL url2 = new URL(dataArray[1]);
+        url2 = new URL(dataArray[1]);
         BufferedImage im2 = ImageIO.read(url2);
+		url3 = new URL(dataArray[2]);
+        BufferedImage im3 = ImageIO.read(url3);
         Graphics2D g = im.createGraphics();
-        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-        g.drawImage(im2, (im.getWidth()-im2.getWidth())/2, (im.getHeight()-im2.getHeight())/2, null);
-        g.dispose();
-
-        display(im);
+		System.out.println("numIm 1st try first "+numIm);
+		switch (i){ 
+			case 1:
+        	g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+        	g.drawImage(im2, (im.getWidth()-im2.getWidth())/2, (im.getHeight()-im2.getHeight())/2, null);
+			System.out.println("numIm 1st try "+numIm);
+			display(im);
+			System.out.println("numIm"+numIm);
+			break;
+			case 3:
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+        	g.drawImage(im2, (im.getWidth()-im2.getWidth())/2, (im.getHeight()-im2.getHeight())/2, null);
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+			g.drawImage(im3, (im.getWidth()-im3.getWidth())/2, (im.getHeight()-im2.getHeight())/2, null);
+			display(im);
+			break;
+		}
 		//below code saves the first nft into a file called sample_output.jpeg, removed bcuz gets anoying when pushing
-        //ImageIO.write(im, "jpeg", new File("sample_output.jpeg"));
-		
+        ImageIO.write(im, "jpeg", new File("sample_output.jpeg"));
       } catch (Exception e) {
       }}
 	  
@@ -260,7 +271,7 @@ public static void getsToGoogleAndPastes(boolean sCPU, String chromePath, Robot 
 
 		}
 		//pastes
-		robot.delay(1200);
+		robot.delay(1000);
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_V);
 		robot.keyRelease(KeyEvent.VK_V);
