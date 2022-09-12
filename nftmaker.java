@@ -178,8 +178,8 @@ for(int i = 0; i < numIm; i++) {
         BufferedImage im3 = ImageIO.read(url3);
         Graphics2D g = im.createGraphics();
 		System.out.println("numIm 1st try first "+numIm);
-		switch (i){ 
-			case 1:
+		switch (numIm){ 
+			case 2:
         	g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
         	g.drawImage(im2, (im.getWidth()-im2.getWidth())/2, (im.getHeight()-im2.getHeight())/2, null);
 			System.out.println("numIm 1st try "+numIm);
