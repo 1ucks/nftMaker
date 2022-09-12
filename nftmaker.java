@@ -14,8 +14,10 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -112,7 +114,6 @@ for(int i = 0; i < numIm; i++) {
 		
 		//opens google(hopefully)
 		getsToGoogleAndPastes(sCPU, chromePath, robot);
-		System.out.println("test below gets google");	
 		if(System.getProperty("os.name").toLowerCase().startsWith("windows")) {
 			//selects first image on school cpu
 			
@@ -168,37 +169,18 @@ for(int i = 0; i < numIm; i++) {
 			//Need to still write code for this.
 		}
 		
-		//prints created image NEEDS FIXING FOR NUMBERS DIFFERENT THAN 2
-		URL url, url2, url3;
-		url = new URL(dataArray[0]);
-        BufferedImage im = ImageIO.read(url);
-        url2 = new URL(dataArray[1]);
-        BufferedImage im2 = ImageIO.read(url2);
-		url3 = new URL(dataArray[2]);
-        BufferedImage im3 = ImageIO.read(url3);
-        Graphics2D g = im.createGraphics();
-		System.out.println("numIm 1st try first "+numIm);
-		switch (numIm){ 
-			case 2:
-        	g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-        	g.drawImage(im2, (im.getWidth()-im2.getWidth())/2, (im.getHeight()-im2.getHeight())/2, null);
-			System.out.println("numIm 1st try "+numIm);
-			display(im);
-			System.out.println("numIm"+numIm);
-			break;
-			case 3:
-			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-        	g.drawImage(im2, (im.getWidth()-im2.getWidth())/2, (im.getHeight()-im2.getHeight())/2, null);
-			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-			g.drawImage(im3, (im.getWidth()-im3.getWidth())/2, (im.getHeight()-im2.getHeight())/2, null);
-			display(im);
-			break;
-		}
-		//below code saves the first nft into a file called sample_output.jpeg, removed bcuz gets anoying when pushing
-        ImageIO.write(im, "jpeg", new File("sample_output.jpeg"));
+
+		
+		
+		
+		
       } catch (Exception e) {
       }}
-	  
+
+
+	printIm(dataArray);
+	
+	
 }
 
 //methods KIERAN ADD YOUR FUNCTIONS DOWN HERE
@@ -210,6 +192,28 @@ public static void display(BufferedImage image) {
     f.pack();
     f.setLocationRelativeTo(null);
     f.setVisible(true);
+}
+public static void printIm(String datas[]) throws IOException {
+	//sets the first image as the background v
+	System.out.println(datas);
+	URL url = new URL(datas[0]);
+	BufferedImage im = ImageIO.read(url);
+	Graphics2D g = im.createGraphics();
+	for(int i = 1; i< datas.length; i ++) {
+		url = new URL(datas[i]);
+		BufferedImage im2 = ImageIO.read(url);
+		Image im3 = im2.getScaledInstance(im.getWidth()/2, im.getHeight()/2, Image.SCALE_DEFAULT);
+	    BufferedImage outputImage = new BufferedImage(im.getWidth()/2, im.getHeight()/2, BufferedImage.TYPE_INT_RGB);
+		
+		g.drawImage(im3, (im.getWidth()-im3.getWidth(null))/2, (im.getHeight()-im3.getHeight(null))/2, null);
+		
+		
+	}
+	g.dispose();
+	display(im);
+	
+	
+	
 }
 public static void schoolCopyAddress(int x, int y) throws AWTException {
 	//copies the selected image's address
