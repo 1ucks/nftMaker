@@ -37,8 +37,7 @@ public class nftmaker{
         int winX = 1100;
         int winY = 200;
         String[] dataArray;
-		int random = (int)(Math.random()*31);
-		int random2 = (int)(Math.random()*31);
+
 
 	 	if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
 			chromePath = "C:\\progra~2/Google/Chrome/Application/chrome.exe";
@@ -200,12 +199,14 @@ public static void printIm(String datas[]) throws IOException {
 	BufferedImage im = ImageIO.read(url);
 	Graphics2D g = im.createGraphics();
 	for(int i = 1; i< datas.length; i ++) {
+		double random = (double)(Math.random()*3 + 1);
+		double random2 = (double)(Math.random()*3 + 1);
 		url = new URL(datas[i]);
 		BufferedImage im2 = ImageIO.read(url);
 		Image im3 = im2.getScaledInstance(im.getWidth()/2, im.getHeight()/2, Image.SCALE_DEFAULT);
 	    BufferedImage outputImage = new BufferedImage(im.getWidth()/2, im.getHeight()/2, BufferedImage.TYPE_INT_RGB);
-		
-		g.drawImage(im3, (im.getWidth()-im3.getWidth(null))/2, (im.getHeight()-im3.getHeight(null))/2, null);
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+		g.drawImage(im3, (im.getWidth()-im3.getWidth(null))/((int)(random)), ((im.getHeight()-im3.getHeight(null))/((int)random2)), null);
 		
 		
 	}
