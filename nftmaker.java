@@ -205,12 +205,15 @@ public static void printIm(String datas[]) throws IOException {
 		BufferedImage im2 = ImageIO.read(url);
 		Image im3 = im2.getScaledInstance(im.getWidth()/2, im.getHeight()/2, Image.SCALE_DEFAULT);
 	    BufferedImage outputImage = new BufferedImage(im.getWidth()/2, im.getHeight()/2, BufferedImage.TYPE_INT_RGB);
-		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
 		g.drawImage(im3, (im.getWidth()-im3.getWidth(null))/((int)(random)), ((im.getHeight()-im3.getHeight(null))/((int)random2)), null);
 		
 		
 	}
 	g.dispose();
+	File file = new File("nft.jpg");
+	file.delete();
+	ImageIO.write(im, "jpeg", new File("nft.jpg"));
 	display(im);
 	
 	
