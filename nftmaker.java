@@ -13,6 +13,7 @@ import java.util.Scanner;
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -37,7 +38,7 @@ public class nftmaker{
         int winX = 1100;
         int winY = 200;
         String[] dataArray;
-
+        boolean colorFilter = true;
 
 	 	if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
 			chromePath = "C:\\progra~2/Google/Chrome/Application/chrome.exe";
@@ -100,6 +101,7 @@ int numIm = in.nextInt();
 dataArray = new String[numIm];
 
 for(int i = 0; i < numIm; i++) {
+		colorFilter = true;
 		String randomLine = getRandomWord(count);
         System.out.println(randomLine);
 
@@ -133,7 +135,8 @@ for(int i = 0; i < numIm; i++) {
 			
 			//gets the image address from the clipboard
 			String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor); 
-			
+			while(colorFilter) {
+				data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor); 
 			//catches the weird image address copy thing
 			while(data.toLowerCase().startsWith("data")) {
 				System.out.println("Image adress invalid, selecting different image");
@@ -146,8 +149,21 @@ for(int i = 0; i < numIm; i++) {
 				
 				//Reassigns data
 				data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor); 
-				
+				System.out.println(data);
 			}
+			colorFilter = badColorFilter(data);
+			//if the selected image is >50% a single color, selects a different image.
+			if(colorFilter) {
+				robot.keyPress(KeyEvent.VK_RIGHT);
+				robot.keyRelease(KeyEvent.VK_RIGHT);
+				robot.delay(100);
+				schoolCopyAddress(winX, winY);
+			}
+			
+			
+			}
+			
+			
 			
 			//closes current window
 			robot.delay(300);
@@ -253,6 +269,49 @@ public static String getRandomWord(long count) {
 
 	return randLine;
 }
+public static boolean badColorFilter(String urL) throws IOException, AWTException {
+	Robot robot = new Robot();
+	
+	URL url = new URL(urL);
+    BufferedImage im = ImageIO.read(url);
+    int imArea = im.getHeight()*im.getWidth();
+    int pixelUno = im.getRGB(0, 0);
+    Color colorUno = new Color(pixelUno, true);
+    int topLeftRGBcombo = colorUno.getRed()+colorUno.getBlue() + colorUno.getGreen();
+    int numTL = 1;
+    //Reading the image
+   for (int y = 0; y < im.getHeight(); y++) {
+      for (int x = 0; x < im.getWidth(); x++) {
+         //Retrieving contents of a pixel
+         int pixel = im.getRGB(x,y);
+         //Creating a Color object from pixel value
+         Color color = new Color(pixel, true);
+         //Retrieving the R G B values
+         int red = color.getRed();
+         int green = color.getGreen();
+         int blue = color.getBlue();
+         if((red+green+blue) == topLeftRGBcombo) {
+        	 numTL += 1;
+         }
+      }
+
+   }
+	System.out.println("color percent: " + (((double)numTL)/((double)imArea)*100));
+   //checks if the the color in the top left of the image is dominant in a certain percent of the image
+   if(((double)numTL)/((double)imArea) >= 0.5) {
+	   System.out.println("Image has been deemed boring, selecting a different image.");
+	   return true;
+   }
+   else {
+	   return false;
+   }
+   
+   
+   
+	
+}
+
+
 public static void getsToGoogleAndPastes(boolean sCPU, String chromePath, Robot robot) throws IOException, AWTException {
 
 	if(!sCPU) {
