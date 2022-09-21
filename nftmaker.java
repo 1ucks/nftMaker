@@ -18,6 +18,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.imageio.ImageIO;
@@ -39,6 +40,8 @@ public class nftmaker{
         int winY = 200;
         String[] dataArray;
         boolean colorFilter = true;
+        boolean urlFilter = true;
+        boolean con = false;
 
 	 	if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
 			chromePath = "C:\\progra~2/Google/Chrome/Application/chrome.exe";
@@ -134,7 +137,7 @@ for(int i = 0; i < numIm; i++) {
 			schoolCopyAddress(winX, winY);
 			
 			//gets the image address from the clipboard
-			String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor); 
+			String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 			while(colorFilter) {
 				data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor); 
 			//catches the weird image address copy thing
@@ -151,6 +154,29 @@ for(int i = 0; i < numIm; i++) {
 				data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor); 
 				System.out.println(data);
 			}
+			//checks if the url returns 404
+			while(urlFilter) {
+				if(check404(data)) {
+					//if it returns 404
+					System.out.println("Bad url, using different image");
+					robot.keyPress(KeyEvent.VK_RIGHT);
+					robot.keyRelease(KeyEvent.VK_RIGHT);
+					robot.delay(100);
+					//copies new image
+					schoolCopyAddress(winX, winY);
+					//sets new image to data
+					data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+					con = true;
+				}
+				else {
+					break;
+				}
+			}
+			if(con) {
+				continue;
+			}
+			
+			
 			colorFilter = badColorFilter(data);
 			//if the selected image is >50% a single color, selects a different image.
 			if(colorFilter) {
@@ -311,7 +337,26 @@ public static boolean badColorFilter(String urL) throws IOException, AWTExceptio
 	
 }
 
-
+public static boolean check404(String url) throws IOException {
+	//checks if the selected image's url 
+	Scanner in = new Scanner(System.in);
+	URL u = new URL (url);
+	HttpURLConnection huc =  ( HttpURLConnection )  u.openConnection (); 
+	huc.setRequestMethod ("GET");
+	huc.connect () ; 
+	int code = huc.getResponseCode() ;
+	if(code != 200) {
+		//TRUE IF 404
+		System.out.println("Code returned not 200. Code returned: " + code);
+		return true;
+	}
+	else {
+		return false;
+	}
+	
+	
+	
+}
 public static void getsToGoogleAndPastes(boolean sCPU, String chromePath, Robot robot) throws IOException, AWTException {
 
 	if(!sCPU) {
