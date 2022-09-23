@@ -240,15 +240,34 @@ public static void printIm(String datas[]) throws IOException {
 	URL url = new URL(datas[0]);
 	BufferedImage im = ImageIO.read(url);
 	Graphics2D g = im.createGraphics();
+	int randomH;
+	int randomW;
+	int ranDi;
+	System.out.println("Background size (" + im.getWidth() + ", " + im.getHeight() + ")");
 	for(int i = 1; i< datas.length; i ++) {
+		
 		double random = (double)(Math.random()*3 + 1);
 		double random2 = (double)(Math.random()*3 + 1);
+		
 		url = new URL(datas[i]);
 		BufferedImage im2 = ImageIO.read(url);
-		Image im3 = im2.getScaledInstance(im.getWidth()/2, im.getHeight()/2, Image.SCALE_DEFAULT);
-	    BufferedImage outputImage = new BufferedImage(im.getWidth()/2, im.getHeight()/2, BufferedImage.TYPE_INT_RGB);
+		
+		//random size
+		ranDi = (int) ((Math.random()*2)+2);
+		
+		Image im3 = im2.getScaledInstance(im.getWidth()/ranDi, im.getHeight()/ranDi, Image.SCALE_DEFAULT);
+		
+		//random coords
+		randomH = (int) (Math.random()*(im.getHeight()-im3.getHeight(null)));
+		randomW = (int) (Math.random()*(im.getWidth()-im3.getWidth(null)));
+		
+		
+		
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-		g.drawImage(im3, (im.getWidth()-im3.getWidth(null))/((int)(random)), ((im.getHeight()-im3.getHeight(null))/((int)random2)), null);
+		System.out.println("Image scaled down " + ranDi + " times");
+		System.out.println("Drawing image at: (" + randomW + ", " + randomH + ")");
+
+		g.drawImage(im3, randomW, randomH, null);
 		
 		
 	}
